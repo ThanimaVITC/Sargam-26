@@ -279,11 +279,13 @@
                 fill: url(#gold-grad);
                 filter: drop-shadow(0 0 0px transparent);
             }
+
             70% {
                 stroke-dashoffset: 0;
                 fill: url(#gold-grad);
                 stroke: #FFD778;
             }
+
             100% {
                 stroke-dashoffset: 0;
                 fill: url(#gold-grad);
@@ -728,7 +730,7 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30 z-0">
                         </div>
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 z-0"
-                            style="background-image: url('images/Screenshot (56).png')">
+                            style="background-image: url('https://i.postimg.cc/f30GB8VY/Screenshot-(56).png')">
                         </div>
                         <div class="relative z-10 flex flex-col items-center">
                             <div
@@ -887,7 +889,7 @@
 
                 <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="gallery-card group aspect-[4/3] bg-black/40">
-                        <img src="images/395A5345.png" alt="Traditional Dance Performance"
+                        <img src="https://i.postimg.cc/N57ZnyG6/395A5345.png" alt="Traditional Dance Performance"
                             class="w-full h-full object-cover" />
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
@@ -897,7 +899,8 @@
                     </div>
 
                     <div class="gallery-card group aspect-[4/3] bg-black/40">
-                        <img src="images/395A5690.png" alt="Musical Performance" class="w-full h-full object-cover" />
+                        <img src="https://i.postimg.cc/zVt4NsWV/395A5690.png" alt="Musical Performance"
+                            class="w-full h-full object-cover" />
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                             <span class="text-xs text-primary font-bold uppercase tracking-widest">Live Music</span>
@@ -906,7 +909,8 @@
                     </div>
 
                     <div class="gallery-card group aspect-[4/3] bg-black/40">
-                        <img src="images/395A9117.png" alt="Maveli & Pookalam" class="w-full h-full object-cover" />
+                        <img src="https://i.postimg.cc/cr9PWpYv/395A9117.png" alt="Maveli & Pookalam"
+                            class="w-full h-full object-cover" />
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                             <span class="text-xs text-primary font-bold uppercase tracking-widest">Pookalam</span>
@@ -915,7 +919,7 @@
                     </div>
 
                     <div class="gallery-card group aspect-[4/3] bg-black/40">
-                        <img src="images/395A9315.png" alt="Chief Guest Felicitation"
+                        <img src="https://i.postimg.cc/mtXK4vMc/395A9315.png" alt="Chief Guest Felicitation"
                             class="w-full h-full object-cover" />
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
@@ -925,7 +929,8 @@
                     </div>
 
                     <div class="gallery-card group aspect-[4/3] bg-black/40">
-                        <img src="images/IMG_0495.JPG" alt="Organizing Team" class="w-full h-full object-cover" />
+                        <img src="https://i.postimg.cc/18TxGk3z/IMG-0495.jpg" alt="Organizing Team"
+                            class="w-full h-full object-cover" />
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                             <span class="text-xs text-primary font-bold uppercase tracking-widest">Thanima Team</span>
@@ -934,7 +939,8 @@
                     </div>
 
                     <div class="gallery-card group aspect-[4/3] bg-black/40">
-                        <img src="images/395A5280.png" alt="Audience & Crowd" class="w-full h-full object-cover" />
+                        <img src="https://i.postimg.cc/DwPX62dd/395A5280.png" alt="Audience & Crowd"
+                            class="w-full h-full object-cover" />
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                             <span class="text-xs text-primary font-bold uppercase tracking-widest">Audience</span>
@@ -1054,26 +1060,29 @@
         let player;
         window.onYouTubeIframeAPIReady = function () {
             player = new YT.Player('yt-player', {
-                videoId: 'DUn7kd6xGio', // Using your unlisted video ID
+                videoId: 'DUn7kd6xGio',
                 playerVars: {
                     'autoplay': 0,
                     'controls': 0,
                     'rel': 0,
                     'playsinline': 1,
                     'enablejsapi': 1,
-                    'origin': window.location.origin || 'http://localhost'
+                    'origin': window.location.origin
                 },
                 events: {
+                    'onReady': function (event) {
+                        console.log('YT Player ready');
+                    },
                     'onStateChange': onPlayerStateChange,
-                    'onError': function(event) {
+                    'onError': function (event) {
                         const container = document.getElementById('video-container');
                         if (container) {
                             container.innerHTML = `
                                 <div class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/95 text-center p-8 backdrop-blur-md">
-                                    <span class="material-symbols-outlined text-error text-5xl mb-4">play_disabled</span>
-                                    <h3 class="text-white text-xl font-bold mb-2">Video Unavailable Locally</h3>
-                                    <p class="text-white/70 mb-6 text-sm max-w-md">YouTube has restricted this video from playing directly inside this page (usually because it's running on a local file instead of a server).</p>
-                                    <a href="https://www.youtube.com/watch?v=DUn7kd6xGio" target="_blank" class="px-6 py-3 bg-primary text-background font-bold tracking-widest uppercase hover:scale-105 transition-transform rounded-sm flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-5xl mb-4" style="color:#E9C893">play_disabled</span>
+                                    <h3 class="text-white text-xl font-bold mb-2">Video Unavailable</h3>
+                                    <p class="text-white/70 mb-6 text-sm max-w-md">YouTube has restricted embedding for this video. Watch it directly on YouTube.</p>
+                                    <a href="https://www.youtube.com/watch?v=DUn7kd6xGio" target="_blank" class="px-6 py-3 font-bold tracking-widest uppercase hover:scale-105 transition-transform rounded-sm flex items-center gap-2" style="background:#E9C893;color:#1a0a0e">
                                         <span class="material-symbols-outlined">open_in_new</span>
                                         Watch on YouTube
                                     </a>
