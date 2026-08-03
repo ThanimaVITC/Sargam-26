@@ -655,24 +655,56 @@
                 src="img/logo-sargam-wordmark-header.webp" />
         </div>
 
-        <div
-            class="flex items-center gap-6 md:gap-8 font-label-caps text-label-caps tracking-widest text-xs md:text-sm">
-            <a href="#video-section" class="text-on-surface hover:text-primary transition-colors uppercase">What is
+        <div class="flex items-center gap-3">
+            <div
+                class="hidden md:flex items-center gap-6 md:gap-8 font-label-caps text-label-caps tracking-widest text-xs md:text-sm">
+                <a href="#video-section" class="text-on-surface hover:text-primary transition-colors uppercase">What is
+                    Sargam</a>
+                <a href="#thanima-section" class="text-on-surface hover:text-primary transition-colors uppercase">What is
+                    Thanima</a>
+                <a href="#gallery-section"
+                    class="text-on-surface hover:text-primary transition-colors uppercase">Gallery</a>
+                <div class="flex items-center gap-2">
+                    <a href="https://rambo.thanimavitc.site" target="_blank" rel="noopener noreferrer"
+                        class="px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-background transition-colors uppercase rounded-sm">Chat
+                        with RAMBO</a>
+                </div>
+            </div>
+            <button id="dark-mode-toggle"
+                class="w-8 h-8 flex items-center justify-center border border-primary text-primary hover:bg-primary hover:text-background transition-colors rounded-sm"
+                aria-label="Toggle Dark Mode">
+                <span class="material-symbols-outlined text-lg" id="dark-mode-icon">dark_mode</span>
+            </button>
+            <button id="mobile-menu-toggle"
+                class="md:hidden w-8 h-8 flex items-center justify-center border border-primary text-primary hover:bg-primary hover:text-background transition-colors rounded-sm"
+                aria-label="Toggle Menu" aria-expanded="false" aria-controls="mobile-menu">
+                <svg id="mobile-menu-icon-open" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+                <svg id="mobile-menu-icon-close" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu"
+            class="hidden md:hidden absolute top-full left-0 w-full bg-black/70 backdrop-blur-md border-t border-primary/20 flex-col items-center gap-6 py-8 font-label-caps text-label-caps tracking-widest text-xs">
+            <a href="#video-section"
+                class="mobile-menu-link text-on-surface hover:text-primary transition-colors uppercase">What is
                 Sargam</a>
-            <a href="#thanima-section" class="text-on-surface hover:text-primary transition-colors uppercase">What is
+            <a href="#thanima-section"
+                class="mobile-menu-link text-on-surface hover:text-primary transition-colors uppercase">What is
                 Thanima</a>
             <a href="#gallery-section"
-                class="text-on-surface hover:text-primary transition-colors uppercase">Gallery</a>
-            <div class="flex items-center gap-2">
-                <a href="https://rambo.thanimavitc.site" target="_blank" rel="noopener noreferrer"
-                    class="px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-background transition-colors uppercase rounded-sm">Chat
-                    with RAMBO</a>
-                <button id="dark-mode-toggle"
-                    class="w-8 h-8 flex items-center justify-center border border-primary text-primary hover:bg-primary hover:text-background transition-colors rounded-sm ml-1"
-                    aria-label="Toggle Dark Mode">
-                    <span class="material-symbols-outlined text-lg" id="dark-mode-icon">dark_mode</span>
-                </button>
-            </div>
+                class="mobile-menu-link text-on-surface hover:text-primary transition-colors uppercase">Gallery</a>
+            <a href="https://rambo.thanimavitc.site" target="_blank" rel="noopener noreferrer"
+                class="mobile-menu-link px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-background transition-colors uppercase rounded-sm">Chat
+                with RAMBO</a>
         </div>
     </nav>
 
@@ -691,12 +723,12 @@
                         src="img/logo-kathakali.webp" fetchpriority="high" />
 
                     <!-- SARGAM '26 Title Container -->
-                    <div class="group flex flex-row items-center justify-center gap-2 md:gap-4">
+                    <div class="group flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
                         <img alt="Sargam Title PNG"
-                            class="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto transition-transform duration-500 group-hover:scale-105"
+                            class="w-full max-w-[220px] sm:max-w-xs md:max-w-sm lg:max-w-md h-auto transition-transform duration-500 group-hover:scale-105"
                             src="img/logo-sargam-title-mobile.webp" fetchpriority="high" />
 
-                        <h1 class="text-7xl md:text-[100px] lg:text-[130px] xl:text-[150px] leading-none color-muted-title tracking-tighter -translate-y-[5%] transition-transform duration-500 group-hover:scale-110 cursor-default"
+                        <h1 class="text-6xl sm:text-7xl md:text-[100px] lg:text-[130px] xl:text-[150px] leading-none color-muted-title tracking-tighter md:-translate-y-[5%] transition-transform duration-500 group-hover:scale-110 cursor-default"
                             style="font-family: 'Chewy', cursive;">
                             '26
                         </h1>
@@ -1040,8 +1072,8 @@
 
     <!-- Footer -->
     <footer
-        class="w-full px-margin-desktop py-12 flex flex-col md:flex-row justify-between items-center gap-gutter border-t border-primary/30 z-50 relative"
-        style="background-color: rgba(61, 17, 24, 0.92);"
+        class="w-full px-margin-mobile md:px-margin-desktop py-12 flex flex-col md:flex-row justify-between items-center gap-gutter border-t border-primary/30 z-50 relative"
+        style="background-color: rgba(61, 17, 24, 0.92);">
         <div class="flex flex-col items-center md:items-start gap-4">
             <div class="font-label-caps text-label-caps text-primary uppercase">SARGAM</div>
             <p class="font-body-md text-label-caps text-primary/60 text-[10px] md:text-label-caps">© Made with
@@ -1086,6 +1118,35 @@
                     } else {
                         darkModeIcon.textContent = 'dark_mode';
                     }
+                });
+            }
+
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenuIconOpen = document.getElementById('mobile-menu-icon-open');
+            const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuToggle && mobileMenu) {
+                const closeMobileMenu = () => {
+                    mobileMenu.classList.remove('flex');
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuIconOpen.classList.remove('hidden');
+                    mobileMenuIconClose.classList.add('hidden');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                };
+                mobileMenuToggle.addEventListener('click', () => {
+                    const isOpen = mobileMenu.classList.contains('flex');
+                    if (isOpen) {
+                        closeMobileMenu();
+                    } else {
+                        mobileMenu.classList.remove('hidden');
+                        mobileMenu.classList.add('flex');
+                        mobileMenuIconOpen.classList.add('hidden');
+                        mobileMenuIconClose.classList.remove('hidden');
+                        mobileMenuToggle.setAttribute('aria-expanded', 'true');
+                    }
+                });
+                mobileMenu.querySelectorAll('.mobile-menu-link').forEach((link) => {
+                    link.addEventListener('click', closeMobileMenu);
                 });
             }
         });
