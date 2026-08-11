@@ -203,11 +203,11 @@
     <style>
         body {
             position: relative;
-            background-color: #A13847;
+            background-color: #8f1f2e;
             background-image:
-                radial-gradient(ellipse 80% 50% at 50% -10%, rgba(203, 163, 88, 0.3) 0%, transparent 60%),
-                radial-gradient(circle at 50% 35%, rgba(203, 163, 88, 0.15) 0%, rgba(161, 56, 71, 0.8) 60%, rgba(80, 20, 30, 0.98) 100%),
-                linear-gradient(180deg, #621f29 0%, #A13847 30%, #b84152 70%, #4a151e 100%);
+                radial-gradient(ellipse 52% 34% at 50% -8%, rgba(240, 196, 112, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse 70% 62% at 50% 26%, rgba(206, 42, 58, 0.86) 0%, rgba(160, 28, 46, 0.82) 45%, rgba(38, 8, 16, 0.98) 100%),
+                linear-gradient(180deg, #4a101b 0%, #9d2436 18%, #c03046 44%, #701727 75%, #2c0a13 100%);
             background-attachment: fixed;
             color: #F3EAD3;
             overflow-x: hidden;
@@ -215,22 +215,26 @@
             transition: background-color 0.5s ease;
         }
 
-        body.pitch-black-mode {
-            background-color: #000000 !important;
-            background-image: none !important;
+        /* Fixed backdrop: blurred coconut/banana frond shadows, then a halftone
+           dot screen that thickens toward the bottom. */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        body.pitch-black-mode::-webkit-scrollbar-track {
-            background: #000000 !important;
+        body::before {
+            background: url('img/bg-foliage.svg') center bottom / cover no-repeat;
         }
 
-        body.pitch-black-mode footer {
-            background-color: #000000 !important;
-        }
-
-        body.pitch-black-mode #video-container,
-        body.pitch-black-mode .timer-box {
-            background-color: #000000 !important;
+        body::after {
+            background-image: radial-gradient(circle at center, rgba(38, 8, 14, 0.55) 1.1px, transparent 1.6px);
+            background-size: 6px 6px;
+            -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 30%, #000 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 30%, #000 100%);
         }
 
         #preloader {
@@ -334,21 +338,18 @@
         }
 
         .malayalam-gold-text {
-            font-family: 'Anek Malayalam', sans-serif;
-            font-size: 98px;
-            font-weight: 800;
             stroke: #FFD778;
             stroke-width: 2.5px;
             paint-order: stroke;
-            stroke-dasharray: 1400;
-            stroke-dashoffset: 1400;
+            stroke-dasharray: 2100;
+            stroke-dashoffset: 2100;
             fill: url(#gold-grad);
             animation: drawAndFillGold 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.16s;
         }
 
         @keyframes drawAndFillGold {
             0% {
-                stroke-dashoffset: 1400;
+                stroke-dashoffset: 2100;
                 fill: url(#gold-grad);
                 filter: drop-shadow(0 0 0px transparent);
             }
@@ -412,17 +413,135 @@
             background-attachment: fixed;
         }
 
-        .geometric-watermark {
+        /* Kerala motifs framing the page: leaf top-right, kathakali bottom-left,
+           the rest scattered down both edges. Behind content, never clickable. */
+        .page-decor {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            bottom: 0;
-            pointer-events: none;
+            inset: 0;
             z-index: -1;
-            opacity: 0.22;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L100 50 L50 100 L0 50 Z' fill='none' stroke='%23CBA358' stroke-width='0.8'/%3E%3C/svg%3E");
-            background-size: 250px 250px;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .page-decor .decor {
+            position: absolute;
+            opacity: 0.55;
+            filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.45));
+        }
+
+        .decor-leaf {
+            top: 0;
+            right: -6px;
+            width: 300px;
+            -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0, #000 130px);
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0, #000 130px);
+        }
+
+        .decor-kathakali {
+            bottom: 60px;
+            left: -24px;
+            width: 230px;
+            opacity: 0.42;
+        }
+
+        .decor-flower {
+            top: 24%;
+            left: -8px;
+            width: 96px;
+        }
+
+        .decor-hand {
+            top: 43%;
+            right: -8px;
+            width: 132px;
+        }
+
+        .decor-dance {
+            top: 62%;
+            left: -12px;
+            width: 168px;
+        }
+
+        .decor-tabla {
+            top: 81%;
+            right: -6px;
+            width: 152px;
+        }
+
+        @media (max-width: 768px) {
+            .page-decor .decor {
+                opacity: 0.32;
+            }
+
+            .decor-leaf {
+                width: 170px;
+            }
+
+            .decor-kathakali {
+                width: 130px;
+            }
+
+            .decor-flower {
+                width: 58px;
+            }
+
+            .decor-hand {
+                width: 76px;
+            }
+
+            .decor-dance {
+                width: 96px;
+            }
+
+            .decor-tabla {
+                width: 88px;
+            }
+        }
+
+        /* Pulikali tiger peeking over the bottom edge of the viewport */
+        .puli-peek {
+            --flip: 1;
+            position: fixed;
+            right: 28px;
+            bottom: 0;
+            width: 210px;
+            z-index: 60;
+            pointer-events: none;
+            filter: drop-shadow(0 -6px 18px rgba(0, 0, 0, 0.45));
+            transform: translateY(110%) scaleX(var(--flip));
+            transition: transform 0.85s cubic-bezier(0.34, 1.32, 0.64, 1);
+        }
+
+        .puli-peek.peeking {
+            transform: translateY(12%) scaleX(var(--flip));
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .puli-peek {
+                transition: none;
+                transform: translateY(12%) scaleX(var(--flip));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .puli-peek {
+                width: 132px;
+                right: 8px;
+            }
+        }
+
+        .thanima-wordmark {
+            display: block;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 34px rgba(240, 135, 31, 0.22));
+        }
+
+        .thanima-wordmark text {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 230px;
+            letter-spacing: -0.02em;
         }
 
         .video-border {
@@ -521,23 +640,185 @@
             }
         }
 
-        /* Fixed Countdown Timer Styling */
-        .timer-box {
-            background: rgba(45, 12, 18, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(203, 163, 88, 0.35);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(203, 163, 88, 0.08);
+        /* Full-screen mobile menu: wipes down from the top, header stays above it
+           so the close button is always reachable. */
+        #mobile-menu {
+            position: fixed;
+            inset: 0;
+            z-index: 40;
+            display: grid;
+            place-items: center;
+            padding: clamp(96px, 16vh, 150px) 28px clamp(32px, 6vh, 64px);
+            background:
+                radial-gradient(ellipse 90% 55% at 50% 0%, rgba(203, 163, 88, 0.16), transparent 62%),
+                linear-gradient(180deg, #5c1522 0%, #3a0c16 55%, #1c0509 100%);
+            clip-path: inset(0 0 100% 0);
+            visibility: hidden;
+            transition: clip-path 0.55s cubic-bezier(0.76, 0, 0.24, 1), visibility 0s linear 0.55s;
         }
 
-        .timer-num-anim {
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+        #mobile-menu.open {
+            clip-path: inset(0 0 0 0);
+            visibility: visible;
+            transition: clip-path 0.55s cubic-bezier(0.76, 0, 0.24, 1), visibility 0s;
         }
 
-        .timer-pulse {
-            transform: scale(1.18);
-            color: #FFF2A3;
-            text-shadow: 0 0 20px rgba(255, 242, 163, 0.8);
+        /* ID beats Tailwind's md:hidden, so keep the breakpoint explicit */
+        @media (min-width: 768px) {
+            #mobile-menu { display: none; }
         }
+
+        /* puli sits at z-60; park it while the menu is open */
+        body.menu-open .puli-peek {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mm-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: clamp(14px, 2.4vh, 24px);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+        }
+
+        .mm-item {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        #mobile-menu.open .mm-item { opacity: 1; transform: none; }
+        #mobile-menu.open .mm-item:nth-child(1) { transition-delay: 0.22s; }
+        #mobile-menu.open .mm-item:nth-child(2) { transition-delay: 0.28s; }
+        #mobile-menu.open .mm-item:nth-child(3) { transition-delay: 0.34s; }
+        #mobile-menu.open .mm-item:nth-child(4) { transition-delay: 0.38s; }
+        #mobile-menu.open .mm-item:nth-child(5) { transition-delay: 0.44s; }
+        #mobile-menu.open .mm-item:nth-child(6) { transition-delay: 0.5s; }
+        #mobile-menu.open .mm-item:nth-child(7) { transition-delay: 0.56s; }
+
+        .mm-link {
+            font-family: 'Anek Malayalam', 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(26px, 5.2vh, 40px);
+            line-height: 1.15;
+            color: #F3EAD3;
+            transition: color 0.25s ease;
+        }
+
+        .mm-link:active { color: #CBA358; }
+
+        .mm-rule {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(203, 163, 88, 0.5), transparent);
+            margin: clamp(4px, 1.4vh, 14px) 0;
+        }
+
+        .mm-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 15px 22px;
+            border-radius: 3px;
+            font-family: 'Syne', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .mm-cta-solid {
+            background: #CBA358;
+            color: #2a0a11;
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .mm-cta-ghost {
+            border: 1px solid rgba(203, 163, 88, 0.55);
+            color: #CBA358;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        /* Hero is sized off viewport height so the logo, title, timer and scroll
+           cue always fit one screen without the page scrolling. */
+        .hero-pad {
+            padding-top: clamp(88px, 12vh, 132px);
+            padding-bottom: clamp(24px, 5vh, 70px);
+        }
+
+        .hero-logo {
+            height: clamp(120px, 28vh, 360px);
+            width: auto;
+        }
+
+        .hero-title-img {
+            height: clamp(48px, min(13vh, 24vw), 160px);
+            width: auto;
+            max-width: 100%;
+        }
+
+        .hero-year {
+            font-size: clamp(57px, min(15.3vh, 28.3vw), 189px);
+        }
+
+        .hero-stack { gap: clamp(10px, 2.2vh, 30px); }
+        .hero-gap { margin-bottom: clamp(22px, 5.5vh, 74px); }
+
+        /* Countdown: one chenda drum per unit */
+        .cd-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: clamp(10px, 2vw, 28px);
+        }
+
+        .cd-cell { display: flex; flex-direction: column; align-items: center; }
+
+        .cd-art {
+            position: relative;
+            width: clamp(72px, min(14vh, 17vw), 150px);
+            container-type: inline-size;
+            filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.5));
+        }
+
+        .cd-art > img { display: block; width: 100%; height: auto; }
+
+        .cd-art .cd-goo {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+        }
+
+        .cd-num {
+            font-family: 'Anek Malayalam', 'Syne', sans-serif;
+            font-weight: 800;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            font-size: clamp(15px, 4vh, 40px);
+            font-size: 28cqw;
+            color: #3d1208;
+            text-shadow: 0 1px 0 rgba(255, 240, 200, 0.45);
+        }
+
+        .cd-lbl {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: clamp(9px, 1.3vh, 13px);
+            color: rgba(203, 163, 88, 0.85);
+            margin-top: clamp(6px, 1.4vh, 18px);
+        }
+
+        /* Digit change: melts to a blob, reforms as the new number. */
+        .cd-goo { display: inline-grid; }
+        .cd-goo > * { grid-area: 1 / 1; }
+        .cd-goo.gooing { filter: url(#goo); }
+        .cd-goo .cd-num { will-change: transform, filter; }
 
         #yt-player {
             position: absolute !important;
@@ -582,7 +863,8 @@
                 <span class="badge-line"></span>
             </div>
             <div class="svg-container">
-                <svg class="gold-theme-svg" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+                <svg class="gold-theme-svg" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" role="img"
+                    aria-label="സർഗം '26">
                     <defs>
                         <filter id="gold-shimmer" x="-30%" y="-30%" width="160%" height="160%">
                             <feGaussianBlur stdDeviation="2.5" result="blur1" />
@@ -607,9 +889,9 @@
                         <path d="M 270,42 L 300,42 L 330,42" stroke-width="2" />
                     </g>
 
-                    <text x="50%" y="58%" text-anchor="middle" class="malayalam-gold-text" filter="url(#gold-shimmer)">
-                        സർഗം '26
-                    </text>
+                    <!-- "സർഗം '26" as outlines from fonts/Indu No_1.ttf (legacy ASCII-encoded
+                         font: no Unicode Malayalam cmap, so it cannot be used as a webfont here) -->
+                    <path class="malayalam-gold-text" filter="url(#gold-shimmer)" d="M192.4,146.5Q192.4,157.4 186.5,166.7Q180.2,177.5 170.6,177.5Q164.2,177.5 158.8,172.2Q155.6,168.7 152.3,165.1Q149.1,161.6 146,158.1Q144.6,156.7 143.1,155.1Q141.6,153.5 140.2,151.8Q135.7,147.6 130.6,147.6Q124.9,147.6 121.2,153.1Q118.5,157.4 118.5,163.6Q118.5,164.5 118.5,165.5Q118.5,166.4 118.5,167.4Q118.5,168.3 118.5,169.2Q118.5,170.1 118.5,171Q118.5,173.5 118.1,175.3Q117.7,177.3 115.3,177.5Q112.8,177.9 112,176.7Q111.1,175 111.1,171.9Q111.1,171.4 111.1,170.2Q111.1,169 111.1,167.4Q111.1,165.6 111.1,164Q111.1,162.5 111.1,161.3Q111.1,160.1 111.1,158.7Q111.1,157.4 111.1,155.9Q110.5,152.8 110.5,152.3Q109.5,143 103.3,135.2Q96.9,127.4 89.2,127.4Q81.7,127.4 76.7,132.8Q71.5,138.5 71.5,147Q71.5,149.2 71.8,151.3Q73.3,160.5 76.3,166Q77.5,167.9 78.9,170.1Q80.3,172.2 81.8,174.3Q81.8,177.5 79.4,177.5Q75.2,177.5 69.3,165.7Q65,157.5 65,146.8Q65,132.5 73.5,124.8Q80.3,118.8 88.8,118.8Q101.7,118.8 110.1,132.7Q113.1,138 116.1,147.2Q117.7,144.1 122.6,141.6Q127.1,139.1 130.8,139.1Q138,139.1 145.3,146.9Q148.2,150.5 151.2,154.1Q154.2,157.8 157.1,161.3Q164,168.9 170,168.9Q177,168.9 181.4,161.7Q186,154.3 186,144.4Q186,138 183.4,132.4Q182.1,130.1 180.7,127.5Q179.4,125 178.1,122.6Q178.1,121.3 179.6,120.2Q181,119.3 182.1,119.5Q184.9,120 188.6,129.6Q192.4,139.4 192.4,146.5ZM273.9,153.3Q273.9,161.1 268.2,169.5Q261.4,179.4 252.7,179.4Q251.1,179.4 245.7,177.6Q241.2,176.2 238.6,174.6Q234.4,171.7 232.1,168.4Q230.6,165.4 229.6,164.1L227.2,157.4Q225.8,154 225.4,151.9Q224,147.2 223.4,141.2Q222.6,140.6 222.3,140.6Q219.1,140.6 215.6,149.8Q211.9,158.9 211.9,160.9L210.2,169.3Q210,171 209.8,172.3Q209.6,173.7 209.6,174.5Q208.6,179.4 207.3,179.4Q205.5,179.4 204.4,176.8Q203,173.7 203,171.9Q203,163.7 205.8,153Q208.6,142.8 213.1,136.1Q215.7,132.6 220.2,128.5Q221.2,127.8 222.6,119.4Q222.7,117.4 223.4,115Q224,112.5 225,109.5Q226.6,103.9 228.5,101.2L232.8,101.2Q233,101.9 233.4,102.5Q233.7,103.2 234,103.7Q234.6,104.7 234.6,105.3Q233,108.3 232.3,110.1Q230,116 230,119.2L231.7,123.8Q232.8,123.1 237.3,121.9Q242.5,120.5 242.3,120.5Q255.2,120.5 265.1,132.5Q273.9,142.9 273.9,153.3L273.9,153.3ZM266.5,150.8Q266.5,142.4 259.3,135.6Q252.1,128.1 242,128.1Q239.1,128.1 235,130.8Q230.9,133.5 230.9,136.3Q230.9,155.1 237.8,163.8Q243.2,170.8 251.3,170.8Q258.1,170.8 262.4,163.5Q266.5,157.5 266.5,150.8ZM357.4,152.4Q357.4,160.8 352.4,169.8Q348.1,177.7 345.4,177.7Q343.5,177.7 343.1,174.9Q343.1,174.6 343,174.3Q343,173.9 343,173.6Q345.9,169.4 347.8,164.7Q349.9,159.4 349.9,153.4Q349.9,146.8 346.2,140.2Q341.7,132.9 335.2,132.9Q327.5,132.9 322.3,139.4Q318.7,144.1 315.3,152.3Q314.8,153.9 314.4,155.3Q313.9,156.6 313.6,157.5Q312.8,160.1 311.9,162.1Q311,164.2 310.5,165.7Q307.9,170.8 303.6,173.9Q299.3,176.7 294.4,176.7Q289.6,176.7 285,171.5Q278.1,163.6 278.2,149.1L279.9,132.6Q281.8,125.6 284.5,121.2Q286.4,117.8 287.7,117.8Q288.6,117.8 289.2,119.5Q290.1,121.1 290.1,123.7Q288.6,128.4 287,133.6Q285.4,138.8 285,142.1Q284.6,145 284.6,146.9Q284.6,147.6 284.6,148.2Q284.6,148.8 284.6,149.1Q284.6,150.2 284.6,151.2Q284.6,152.1 284.6,152.4Q284.6,152.8 284.8,153.7Q284.9,154.6 285,155.7Q285.4,158.5 288.1,162.6Q291.7,168.1 296.3,168.1Q302.3,168.1 305.9,159.8Q307.5,156 309.1,152Q310.7,148 312.2,144.1Q316.6,136.3 321.5,132.2Q327.9,126.4 335.1,126.4Q344.7,126.4 350.9,134.4Q357.4,143.6 357.4,152.4ZM390,158.8Q390,166.7 386.7,169.8Q383.4,172.9 377.3,172.9Q371.9,172.9 367.6,169.4Q363.3,165.9 363.3,160.9Q363.3,155.6 366.6,151.4Q370.3,147.2 375.2,147.2Q379.3,147.2 383.8,149.5Q390,152.7 390,158.9L390,158.8L390,158.8ZM382.5,160.9Q382.5,158.9 380.4,156.8Q378.4,154.8 375.9,154.8Q374.5,154.8 372.7,156.1Q370.7,157.4 370.7,159.3Q370.7,161.3 372.8,162.7Q374.8,164.3 377.1,164.3Q379.3,164.3 381.1,163.6Q382.5,163.1 382.5,161L382.5,160.9ZM444.8,87Q444.8,91.1 440.7,95.1Q436.6,99.2 433.9,99.2Q432.9,99.2 432.1,98.6Q431.2,98 431.2,95.9Q431.2,95.6 433.8,93.3Q434,93.2 434.4,92.9Q434.7,92.6 435.2,92.3Q430.8,88.6 430.8,85.8Q430.8,84.1 433.1,81.9Q435.2,79.9 437.8,79.9Q440.4,79.9 442.8,82.3Q444.8,84.3 444.8,87ZM490.2,174.3Q490.2,175.5 489.6,176.6Q488.7,177.4 487.6,177.4Q486,177.2 484.7,177.1Q483.3,177 482.3,177Q479,176.7 475.9,176.5Q472.8,176.4 470,176.4Q467.4,176.4 465.1,176.5Q462.9,176.7 461,177Q459.1,177.1 457.3,177.6Q455.5,178 454.1,178.5Q450.2,178.5 448.7,177.9Q446.2,176.5 446.2,173.7Q446.2,172.8 447.9,171.9Q455.5,168.6 457,167.4Q459.3,166 461,164.8Q462.7,163.7 463.5,163.2Q466.8,161.2 469.2,158.1Q471.8,154.8 473.8,152.2Q475.8,149.6 476.8,147.7Q481.5,140.5 481.5,136Q481.5,131.8 479.5,130.2Q477.3,128.3 474.1,128.3Q464.8,128.3 461.6,140.6Q458.2,152.9 456.1,152.9Q453.5,152.9 452.1,150.4Q451,148 451,145.7Q451,135.5 458.6,127.7Q466.3,119.8 474.4,119.8Q480.2,119.8 484.6,123.2Q489,126.7 489,132.2Q489,140.2 480.3,152.8Q477.4,156.8 474.6,160.7Q471.8,164.5 469,168.5Q473.5,168.9 475.2,168.9Q475.8,168.9 476.6,168.9Q477.3,168.9 478.2,168.9Q479,168.9 479.8,168.9Q480.7,168.9 481.7,168.9Q485.1,168.9 487.6,170.1Q490.2,171.3 490.2,174.3ZM535,164.6Q535,171.1 528.9,175.6Q522.7,180.1 514.9,180.1Q507.5,180.1 502.1,176Q496.4,171.7 496.4,164.9Q496.4,161.8 499.5,153.2Q502.1,145.8 505.6,138.5Q506.8,135.9 509.1,132.8Q509.6,131.8 510.4,130.8Q511.1,129.8 511.8,128.8Q512.5,127.5 515.4,124.2Q517.7,121.4 518.8,121.4Q520.2,121.4 521.6,123.1Q522,123.4 522.7,124.9Q521.6,125.7 520.8,126.6Q520.1,127.5 519.5,128.1Q511.9,136.8 509.5,147.1Q516.9,147.1 524.8,151.3Q535,156.6 535,164.8L535,164.6L535,164.6ZM527.5,163.9Q527.5,158.9 519.8,155.3Q513.3,152.5 508.2,152.5Q507.6,152.5 507.3,152.5Q506.9,152.6 506.9,152.6Q505.6,154.3 504.7,157.4Q503.9,160.7 503.9,163.9Q503.9,166.7 506.3,168.5Q507.8,169.9 512.1,171.4Q513.5,171.6 514.7,171.6Q518.9,171.6 522.9,169.7Q527.5,167.5 527.5,163.9Z" />
 
                     <g class="motif-pattern" stroke-linecap="round">
                         <path d="M 270,210 L 300,210 L 330,210" stroke-width="2" />
@@ -639,7 +921,14 @@
         </div>
     </div>
 
-    <div class="geometric-watermark"></div>
+    <div class="page-decor" aria-hidden="true">
+        <img class="decor decor-leaf" src="img/decor-leaf.webp" alt="" loading="lazy" decoding="async" />
+        <img class="decor decor-kathakali" src="img/logo-kathakali.webp" alt="" loading="lazy" decoding="async" />
+        <img class="decor decor-flower" src="img/decor-flower.webp" alt="" loading="lazy" decoding="async" />
+        <img class="decor decor-hand" src="img/decor-hand.webp" alt="" loading="lazy" decoding="async" />
+        <img class="decor decor-dance" src="img/decor-dance.webp" alt="" loading="lazy" decoding="async" />
+        <img class="decor decor-tabla" src="img/decor-tabla.webp" alt="" loading="lazy" decoding="async" />
+    </div>
     <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-primary z-50 transition-all duration-75 w-0"></div>
 
 
@@ -647,7 +936,6 @@
     <nav id="navbar"
         class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-8 transition-all duration-300 bg-transparent">
         <div class="flex items-center gap-3 group cursor-pointer">
-            <span class="w-8 h-[1px] bg-primary hidden md:block transition-all duration-300 group-hover:w-12"></span>
             <img alt="Kathakali Logo"
                 class="h-9 w-auto vibrant-logo transition-transform duration-300 group-hover:scale-110"
                 src="img/logo-kathakali.webp" />
@@ -670,11 +958,6 @@
                         with RAMBO</a>
                 </div>
             </div>
-            <button id="dark-mode-toggle"
-                class="w-8 h-8 flex items-center justify-center border border-primary text-primary hover:bg-primary hover:text-background transition-colors rounded-sm"
-                aria-label="Toggle Dark Mode">
-                <span class="material-symbols-outlined text-lg" id="dark-mode-icon">dark_mode</span>
-            </button>
             <button id="mobile-menu-toggle"
                 class="md:hidden w-8 h-8 flex items-center justify-center border border-primary text-primary hover:bg-primary hover:text-background transition-colors rounded-sm"
                 aria-label="Toggle Menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -692,43 +975,49 @@
             </button>
         </div>
 
-        <div id="mobile-menu"
-            class="hidden md:hidden absolute top-full left-0 w-full bg-black/70 backdrop-blur-md border-t border-primary/20 flex-col items-center gap-6 py-8 font-label-caps text-label-caps tracking-widest text-xs">
-            <a href="#video-section"
-                class="mobile-menu-link text-on-surface hover:text-primary transition-colors uppercase">What is
-                Sargam</a>
-            <a href="#thanima-section"
-                class="mobile-menu-link text-on-surface hover:text-primary transition-colors uppercase">What is
-                Thanima</a>
-            <a href="#gallery-section"
-                class="mobile-menu-link text-on-surface hover:text-primary transition-colors uppercase">Gallery</a>
-            <a href="https://rambo.thanimavitc.site" target="_blank" rel="noopener noreferrer"
-                class="mobile-menu-link px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-background transition-colors uppercase rounded-sm">Chat
-                with RAMBO</a>
+        <div id="mobile-menu" class="md:hidden" aria-hidden="true">
+            <nav class="mm-inner">
+                <a href="#video-section" class="mobile-menu-link mm-item mm-link">What is Sargam</a>
+                <a href="#thanima-section" class="mobile-menu-link mm-item mm-link">What is Thanima</a>
+                <a href="#gallery-section" class="mobile-menu-link mm-item mm-link">Gallery</a>
+
+                <span class="mm-item mm-rule" aria-hidden="true"></span>
+
+                <a href="https://eventhubcc.vit.ac.in/EventHub/#:~:text=Sargam%202026" target="_blank"
+                    rel="noopener noreferrer" class="mobile-menu-link mm-item mm-cta mm-cta-solid">
+                    Book Tickets Now
+                </a>
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=SARGAM+%2726+-+VIT+Chennai&dates=20260820T033000Z/20260820T123000Z&details=Sargam+%2726+Onam+Celebration+by+Thanima+at+VIT+Chennai.&location=MG+Auditorium%2C+VIT+Chennai"
+                    target="_blank" rel="noopener noreferrer" class="mobile-menu-link mm-item mm-cta mm-cta-ghost">
+                    <span class="material-symbols-outlined text-lg">event</span>
+                    Add to Google Calendar
+                </a>
+                <a href="https://rambo.thanimavitc.site" target="_blank" rel="noopener noreferrer"
+                    class="mobile-menu-link mm-item mm-cta mm-cta-ghost">Chat with RAMBO</a>
+            </nav>
         </div>
     </nav>
 
     <main class="relative watermark-bg">
         <!-- HERO SECTION -->
         <div
-            class="relative w-full min-h-screen border-b border-primary/20 bg-gradient-to-b from-transparent via-black/10 to-black/30">
+            class="relative w-full min-h-screen border-b border-primary/20">
             <section id="hero-entity"
-                class="min-h-screen flex flex-col items-center justify-center text-center px-margin-mobile md:px-margin-desktop relative z-10 pt-24 pb-12">
+                class="min-h-screen flex flex-col items-center justify-center text-center px-margin-mobile md:px-margin-desktop relative z-10 hero-pad">
 
                 <!-- MAIN HERO HEADER -->
-                <div class="mb-10 flex flex-col items-center justify-center gap-4 md:gap-6 reveal-on-scroll delay-1">
+                <div class="hero-gap hero-stack flex flex-col items-center justify-center reveal-on-scroll delay-1">
                     <!-- KATHAKALI LOGO WITH BREATHING GLOW ANIMATION -->
-                    <img alt="Kathakali Logo"
-                        class="w-44 md:w-60 lg:w-72 h-auto animate-breathing-glow transition-transform duration-500"
+                    <img alt="Kathakali Logo" class="hero-logo animate-breathing-glow transition-transform duration-500"
                         src="img/logo-kathakali.webp" fetchpriority="high" />
 
                     <!-- SARGAM '26 Title Container -->
-                    <div class="group flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+                    <div class="group flex flex-row items-center justify-center gap-2 md:gap-4">
                         <img alt="Sargam Title PNG"
-                            class="w-full max-w-[220px] sm:max-w-xs md:max-w-sm lg:max-w-md h-auto transition-transform duration-500 group-hover:scale-105"
+                            class="hero-title-img transition-transform duration-500 group-hover:scale-105"
                             src="img/logo-sargam-title-mobile.webp" fetchpriority="high" />
 
-                        <h1 class="text-6xl sm:text-7xl md:text-[100px] lg:text-[130px] xl:text-[150px] leading-none color-muted-title tracking-tighter md:-translate-y-[5%] transition-transform duration-500 group-hover:scale-110 cursor-default"
+                        <h1 class="hero-year leading-none color-muted-title tracking-tighter -translate-y-[2%] transition-transform duration-500 group-hover:scale-110 cursor-default"
                             style="font-family: 'Chewy', cursive;">
                             '26
                         </h1>
@@ -736,58 +1025,43 @@
                 </div>
 
                 <!-- COUNTDOWN TIMER -->
-                <div class="mb-12 relative reveal-on-scroll delay-3 max-w-2xl w-full">
-                    <div class="timer-box rounded-2xl p-4 sm:p-6 md:p-8">
-                        <div class="grid grid-cols-4 divide-x divide-primary/20">
-
-                            <!-- Days -->
-                            <div class="flex flex-col items-center justify-center px-2 sm:px-4 group cursor-pointer">
-                                <span
-                                    class="font-headline-lg text-primary text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight timer-num-anim inline-block"
-                                    id="days">00</span>
-                                <span
-                                    class="font-label-caps text-label-caps text-primary/70 uppercase mt-2 text-[10px] sm:text-xs tracking-widest">Days</span>
+                <div class="relative reveal-on-scroll delay-3 w-full">
+                    <div class="cd-row">
+                        <div class="cd-cell">
+                            <div class="cd-art">
+                                <img src="img/chenda.webp" alt="" aria-hidden="true" decoding="async"
+                                    fetchpriority="high" />
+                                <span class="cd-goo"><span class="cd-num" id="days">00</span></span>
                             </div>
-
-                            <!-- Hours -->
-                            <div class="flex flex-col items-center justify-center px-2 sm:px-4 group cursor-pointer">
-                                <span
-                                    class="font-headline-lg text-primary text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight timer-num-anim inline-block"
-                                    id="hours">00</span>
-                                <span
-                                    class="font-label-caps text-label-caps text-primary/70 uppercase mt-2 text-[10px] sm:text-xs tracking-widest">Hours</span>
+                            <span class="cd-lbl">Days</span>
+                        </div>
+                        <div class="cd-cell">
+                            <div class="cd-art">
+                                <img src="img/chenda.webp" alt="" aria-hidden="true" decoding="async"
+                                    fetchpriority="high" />
+                                <span class="cd-goo"><span class="cd-num" id="hours">00</span></span>
                             </div>
-
-                            <!-- Minutes -->
-                            <div class="flex flex-col items-center justify-center px-2 sm:px-4 group cursor-pointer">
-                                <span
-                                    class="font-headline-lg text-primary text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight timer-num-anim inline-block"
-                                    id="minutes">00</span>
-                                <span
-                                    class="font-label-caps text-label-caps text-primary/70 uppercase mt-2 text-[10px] sm:text-xs tracking-widest">Mins</span>
+                            <span class="cd-lbl">Hours</span>
+                        </div>
+                        <div class="cd-cell">
+                            <div class="cd-art">
+                                <img src="img/chenda.webp" alt="" aria-hidden="true" decoding="async"
+                                    fetchpriority="high" />
+                                <span class="cd-goo"><span class="cd-num" id="minutes">00</span></span>
                             </div>
-
-                            <!-- Seconds -->
-                            <div class="flex flex-col items-center justify-center px-2 sm:px-4 group cursor-pointer">
-                                <span
-                                    class="font-headline-lg text-primary text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight timer-num-anim inline-block"
-                                    id="seconds">00</span>
-                                <span
-                                    class="font-label-caps text-label-caps text-primary/70 uppercase mt-2 text-[10px] sm:text-xs tracking-widest">Secs</span>
+                            <span class="cd-lbl">Mins</span>
+                        </div>
+                        <div class="cd-cell">
+                            <div class="cd-art">
+                                <img src="img/chenda.webp" alt="" aria-hidden="true" decoding="async"
+                                    fetchpriority="high" />
+                                <span class="cd-goo"><span class="cd-num" id="seconds">00</span></span>
                             </div>
-
+                            <span class="cd-lbl">Secs</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-auto flex flex-col items-center cursor-pointer group reveal-on-scroll delay-3"
-                    onclick="scrollToContent()">
-                    <span
-                        class="font-label-caps text-label-caps text-primary/70 uppercase tracking-widest text-[11px] mb-2 group-hover:text-primary transition-colors">Scroll
-                        to Discover</span>
-                    <span
-                        class="material-symbols-outlined text-primary text-3xl animate-bounce-slow">keyboard_arrow_down</span>
-                </div>
             </section>
         </div>
 
@@ -1052,15 +1326,16 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
-                        <button
-                            class="ripple-btn px-8 py-4 bg-primary text-background font-label-caps text-label-caps uppercase tracking-widest transition-all duration-300 rounded-sm font-bold hover:scale-105 active:scale-95 w-full sm:w-auto">
-                            Secure Your Access
-                        </button>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-2xl mx-auto">
+                        <a href="https://eventhubcc.vit.ac.in/EventHub/#:~:text=Sargam%202026" target="_blank"
+                            rel="noopener noreferrer"
+                            class="ripple-btn px-8 py-4 bg-primary text-background font-label-caps text-label-caps uppercase tracking-widest transition-all duration-300 rounded-sm font-bold hover:scale-105 active:scale-95 flex items-center justify-center w-full">
+                            Book Tickets Now
+                        </a>
 
                         <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=SARGAM+%2726+-+VIT+Chennai&dates=20260820T033000Z/20260820T123000Z&details=Sargam+%2726+Onam+Celebration+by+Thanima+at+VIT+Chennai.&location=MG+Auditorium%2C+VIT+Chennai"
                             target="_blank" rel="noopener noreferrer"
-                            class="ripple-btn px-8 py-4 bg-black/40 hover:bg-black/60 text-primary border border-primary/50 font-label-caps text-label-caps uppercase tracking-widest transition-all duration-300 rounded-sm font-bold hover:scale-105 active:scale-95 flex items-center justify-center gap-2 w-full sm:w-auto">
+                            class="ripple-btn px-8 py-4 bg-black/40 hover:bg-black/60 text-primary border border-primary/50 font-label-caps text-label-caps uppercase tracking-widest transition-all duration-300 rounded-sm font-bold hover:scale-105 active:scale-95 flex items-center justify-center gap-2 w-full">
                             <span class="material-symbols-outlined text-xl">event</span>
                             Add to Google Calendar
                         </a>
@@ -1071,25 +1346,50 @@
     </main>
 
     <!-- Footer -->
-    <footer
-        class="w-full px-margin-mobile md:px-margin-desktop py-12 flex flex-col md:flex-row justify-between items-center gap-gutter border-t border-primary/30 z-50 relative"
+    <!-- gooey filter used by the countdown digit morph -->
+    <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+        <defs>
+            <filter id="goo" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b" />
+                <feColorMatrix in="b" type="matrix"
+                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 12 -3.6" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Pulikali tiger peeking over the bottom edge -->
+    <img class="puli-peek" src="img/puli-peek.webp" alt="" aria-hidden="true" loading="lazy"
+        decoding="async" />
+
+    <footer class="w-full border-t border-primary/30 z-50 relative overflow-hidden"
         style="background-color: rgba(61, 17, 24, 0.92);">
-        <div class="flex flex-col items-center md:items-start gap-4">
-            <div class="font-label-caps text-label-caps text-primary uppercase">SARGAM</div>
-            <p class="font-body-md text-label-caps text-primary/60 text-[10px] md:text-label-caps">© Made with
-                <span class="text-primary" aria-hidden="true">&#10084;</span> by Thanima.</p>
+        <div
+            class="w-full px-margin-mobile md:px-margin-desktop pt-10 pb-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 font-body-md text-[15px] md:text-[18px] text-on-surface">
+            <span class="font-label-caps text-[15px] md:text-[18px] font-bold tracking-widest text-primary uppercase">Sargam 2026</span>
+            <span class="text-primary/40" aria-hidden="true">-</span>
+            <a class="hover:text-primary transition-colors" href="tel:+919188831152">Johan +91 9188831152</a>
+            <span class="text-primary/40" aria-hidden="true">-</span>
+            <a class="hover:text-primary transition-colors" href="tel:+919567694302">Nandhana +91 9567694302</a>
+            <span class="text-primary/40" aria-hidden="true">-</span>
+            <a class="hover:text-primary transition-colors" href="tel:+91807579365">Shaheer +91 807579365</a>
         </div>
-        <div class="flex flex-col md:flex-row gap-4 md:gap-8 items-center md:items-end">
-            <div class="flex flex-col items-center md:items-end gap-1">
-                <span class="font-label-caps text-primary/70 text-[10px] uppercase tracking-widest mb-1">Contact the
-                    Coordinators</span>
-                <a class="w-full max-w-[220px] flex justify-between gap-4 font-body-md text-[13px] text-on-surface hover:text-primary transition-colors"
-                    href="tel:+919188831152"><span>Johan</span><span>+91 9188831152</span></a>
-                <a class="w-full max-w-[220px] flex justify-between gap-4 font-body-md text-[13px] text-on-surface hover:text-primary transition-colors"
-                    href="tel:+919567694302"><span>Nandhana</span><span>+91 9567694302</span></a>
-                <a class="w-full max-w-[220px] flex justify-between gap-4 font-body-md text-[13px] text-on-surface hover:text-primary transition-colors"
-                    href="tel:+91807579365"><span>Shaheer</span><span>+91 807579365</span></a>
-            </div>
+
+        <!-- Full-bleed wordmark. textLength pins it to the container width at any
+             screen size, so it never wraps or leaves a ragged gap. -->
+        <div class="px-margin-mobile md:px-margin-desktop pb-6">
+            <svg class="thanima-wordmark" viewBox="0 0 1000 228" role="img" aria-label="Thanima"
+                xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="thanima-gold" x1="0%" y1="0%" x2="100%" y2="35%">
+                        <stop offset="0%" stop-color="#FFEFB0" />
+                        <stop offset="30%" stop-color="#FFC44D" />
+                        <stop offset="62%" stop-color="#F0871F" />
+                        <stop offset="100%" stop-color="#FFD778" />
+                    </linearGradient>
+                </defs>
+                <text x="500" y="199" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs"
+                    fill="url(#thanima-gold)">THANIMA</text>
+            </svg>
         </div>
     </footer>
 
@@ -1103,22 +1403,23 @@
             if (preloader) preloader.classList.add('fade-out');
         }, 2000);
 
-        function scrollToContent() {
-            document.getElementById('content').scrollIntoView({ behavior: 'smooth' });
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            const darkModeIcon = document.getElementById('dark-mode-icon');
-            if (darkModeToggle) {
-                darkModeToggle.addEventListener('click', () => {
-                    document.body.classList.toggle('pitch-black-mode');
-                    if (document.body.classList.contains('pitch-black-mode')) {
-                        darkModeIcon.textContent = 'light_mode';
-                    } else {
-                        darkModeIcon.textContent = 'dark_mode';
-                    }
-                });
+            // Puli pops up at a random spot along the bottom edge, ducks, repeats.
+            const puli = document.querySelector('.puli-peek');
+            if (puli && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const rand = (a, b) => a + Math.random() * (b - a);
+                const peek = () => {
+                    const span = Math.max(8, window.innerWidth - puli.offsetWidth - 8);
+                    puli.style.right = 'auto';
+                    puli.style.left = rand(8, span) + 'px';
+                    puli.style.setProperty('--flip', Math.random() < 0.5 ? -1 : 1);
+                    puli.classList.add('peeking');
+                    setTimeout(() => {
+                        puli.classList.remove('peeking');
+                        setTimeout(peek, rand(2200, 6000));
+                    }, rand(2600, 5200));
+                };
+                setTimeout(peek, 2900);   // just after the preloader clears at ~2.5s
             }
 
             const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
@@ -1126,27 +1427,28 @@
             const mobileMenuIconClose = document.getElementById('mobile-menu-icon-close');
             const mobileMenu = document.getElementById('mobile-menu');
             if (mobileMenuToggle && mobileMenu) {
-                const closeMobileMenu = () => {
-                    mobileMenu.classList.remove('flex');
-                    mobileMenu.classList.add('hidden');
-                    mobileMenuIconOpen.classList.remove('hidden');
-                    mobileMenuIconClose.classList.add('hidden');
-                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                const setMenu = (open) => {
+                    mobileMenu.classList.toggle('open', open);
+                    mobileMenu.setAttribute('aria-hidden', String(!open));
+                    mobileMenuIconOpen.classList.toggle('hidden', open);
+                    mobileMenuIconClose.classList.toggle('hidden', !open);
+                    mobileMenuToggle.setAttribute('aria-expanded', String(open));
+                    document.body.style.overflow = open ? 'hidden' : '';
+                    document.body.classList.toggle('menu-open', open);
                 };
+                const closeMobileMenu = () => setMenu(false);
                 mobileMenuToggle.addEventListener('click', () => {
-                    const isOpen = mobileMenu.classList.contains('flex');
-                    if (isOpen) {
-                        closeMobileMenu();
-                    } else {
-                        mobileMenu.classList.remove('hidden');
-                        mobileMenu.classList.add('flex');
-                        mobileMenuIconOpen.classList.add('hidden');
-                        mobileMenuIconClose.classList.remove('hidden');
-                        mobileMenuToggle.setAttribute('aria-expanded', 'true');
-                    }
+                    setMenu(!mobileMenu.classList.contains('open'));
                 });
                 mobileMenu.querySelectorAll('.mobile-menu-link').forEach((link) => {
                     link.addEventListener('click', closeMobileMenu);
+                });
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMobileMenu();
+                });
+                // a resize into desktop layout must not leave the body scroll-locked
+                window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+                    if (e.matches) closeMobileMenu();
                 });
             }
         });
@@ -1273,6 +1575,33 @@
         });
 
         // Countdown Timer
+        // A digit melts into a blob, swaps value while it is unreadable, then reforms.
+        // One animation keeps both halves in sync; blur returns to 0 at each end so
+        // switching the gooey filter off never snaps the glyph weight.
+        const cdReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const CD_MORPH = 560;
+
+        function setDigits(el, text) {
+            if (!el || el.textContent === text) return;
+            if (cdReduceMotion || !el.animate) { el.textContent = text; return; }
+            const goo = el.closest('.cd-goo');
+            if (goo) goo.classList.add('gooing');
+            const anim = el.animate([
+                { transform: 'scale(1, 1)', filter: 'blur(0px)' },
+                { transform: 'scale(0.52, 0.44)', filter: 'blur(4px)', offset: 0.5 },
+                { transform: 'scale(1, 1)', filter: 'blur(0px)' }
+            ], { duration: CD_MORPH, easing: 'ease-in-out' });
+            setTimeout(() => { el.textContent = text; }, CD_MORPH / 2);
+            const done = () => {
+                if (goo) goo.classList.remove('gooing');
+                el.animate([
+                    { textShadow: '0 0 24px rgba(255, 196, 77, 0.95)' },
+                    { textShadow: '0 1px 0 rgba(255, 240, 200, 0.45)' }
+                ], { duration: 420, easing: 'ease-out' });
+            };
+            if (anim.finished) anim.finished.then(done).catch(() => { }); else anim.onfinish = done;
+        }
+
         function updateCountdown() {
             const now = new Date().getTime();
             const targetDate = new Date("Aug 20, 2026 09:00:00").getTime();
@@ -1293,15 +1622,10 @@
             const newMins = m.toString().padStart(2, '0');
             const newSecs = s.toString().padStart(2, '0');
 
-            if (daysEl && daysEl.innerText !== newDays) daysEl.innerText = newDays;
-            if (hoursEl && hoursEl.innerText !== newHours) hoursEl.innerText = newHours;
-            if (minutesEl && minutesEl.innerText !== newMins) minutesEl.innerText = newMins;
-
-            if (secondsEl && secondsEl.innerText !== newSecs) {
-                secondsEl.innerText = newSecs;
-                secondsEl.classList.add('timer-pulse');
-                setTimeout(() => secondsEl.classList.remove('timer-pulse'), 300);
-            }
+            setDigits(daysEl, newDays);
+            setDigits(hoursEl, newHours);
+            setDigits(minutesEl, newMins);
+            setDigits(secondsEl, newSecs);
         }
         setInterval(updateCountdown, 1000);
         updateCountdown();
@@ -1338,11 +1662,11 @@
             const navbar = document.getElementById('navbar');
             if (navbar) {
                 if (scrolled > 50) {
-                    navbar.classList.add('bg-black/40', 'backdrop-blur-md', 'py-4', 'shadow-lg');
-                    navbar.classList.remove('py-8', 'bg-transparent');
+                    navbar.classList.add('py-4');
+                    navbar.classList.remove('py-8');
                 } else {
-                    navbar.classList.remove('bg-black/40', 'backdrop-blur-md', 'py-4', 'shadow-lg');
-                    navbar.classList.add('py-8', 'bg-transparent');
+                    navbar.classList.remove('py-4');
+                    navbar.classList.add('py-8');
                 }
             }
 
