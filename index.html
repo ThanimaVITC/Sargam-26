@@ -894,6 +894,11 @@
             place-items: center;
         }
 
+        @media (max-width: 899px) {
+            #artist-reveal { min-height: 46svh; }
+            #artist-reveal.revealed { min-height: 100svh; }
+        }
+
         .ar-reveal { display: none; width: 100%; }
 
         .ar-reveal.show {
@@ -1115,7 +1120,7 @@
                 </div>
             </div>
             <button id="mobile-menu-toggle"
-                class="md:hidden w-8 h-8 flex items-center justify-center border border-primary text-primary hover:bg-primary hover:text-background transition-colors rounded-sm"
+                class="md:hidden relative z-50 w-8 h-8 flex items-center justify-center border border-primary text-primary hover:bg-primary hover:text-background transition-colors rounded-sm"
                 aria-label="Toggle Menu" aria-expanded="false" aria-controls="mobile-menu">
                 <svg id="mobile-menu-icon-open" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -1854,6 +1859,8 @@
                 if (box) box.style.display = "none";
                 const img = document.getElementById("ar-image");
                 if (img) img.classList.add("show");
+                const sec = document.getElementById("artist-reveal");
+                if (sec) sec.classList.add("revealed");
                 return true;
             }
             setDigits(document.getElementById("ar-days"),
