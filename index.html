@@ -506,11 +506,22 @@
             bottom: 0;
             width: 210px;
             z-index: 60;
-            pointer-events: none;
+            display: block;
+            cursor: pointer;
             filter: drop-shadow(0 -6px 18px rgba(0, 0, 0, 0.45));
             transform: translateY(110%) scaleX(var(--flip));
             transition: transform 0.85s cubic-bezier(0.34, 1.32, 0.64, 1);
         }
+
+        /* Ducked, it sits fully below the viewport, so it can never eat a click. */
+        .puli-peek > img { display: block; width: 100%; height: auto; }
+
+        .puli-peek.peeking:hover,
+        .puli-peek.peeking:focus-visible {
+            transform: translateY(2%) scaleX(var(--flip));
+        }
+
+        .puli-peek:focus-visible { outline: 2px solid rgba(203, 163, 88, 0.9); outline-offset: 4px; }
 
         .puli-peek.peeking {
             transform: translateY(12%) scaleX(var(--flip));
@@ -784,7 +795,13 @@
             filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.5));
         }
 
-        .cd-art > img { display: block; width: 100%; height: auto; }
+        .cd-art > img {
+            display: block;
+            width: 100%;
+            height: auto;
+            transform-origin: 50% 50%;
+            transition: transform 0.6s cubic-bezier(0.3, 0.9, 0.3, 1);
+        }
 
         .cd-art .cd-goo {
             position: absolute;
@@ -819,6 +836,145 @@
         .cd-goo > * { grid-area: 1 / 1; }
         .cd-goo.gooing { filter: url(#goo); }
         .cd-goo .cd-num { will-change: transform, filter; }
+
+        /* Artist reveal: a compact countdown that swaps itself for the poster */
+        .ar-kicker {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.28em;
+            font-size: clamp(10px, 1.4vw, 13px);
+            color: rgba(203, 163, 88, 0.9);
+        }
+
+        .ar-date {
+            font-family: 'Syne', sans-serif;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-size: clamp(9px, 1.15vw, 12px);
+            color: rgba(246, 223, 174, 0.6);
+            margin-top: 6px;
+        }
+
+        .ar-row {
+            display: flex;
+            justify-content: center;
+            gap: clamp(8px, 1.6vw, 18px);
+            margin-top: clamp(16px, 2.4vw, 26px);
+        }
+
+        .ar-cell {
+            min-width: clamp(58px, 9vw, 88px);
+            padding: clamp(9px, 1.2vw, 15px) clamp(6px, 1vw, 12px);
+            border: 1px solid rgba(203, 163, 88, 0.35);
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(255, 215, 140, 0.10), rgba(0, 0, 0, 0.22));
+        }
+
+        .ar-num {
+            display: block;
+            font-family: 'Anek Malayalam', 'Syne', sans-serif;
+            font-weight: 800;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            font-size: clamp(22px, 4.2vw, 40px);
+            color: #f6dfae;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+        }
+
+        .ar-cell .cd-lbl {
+            display: block;
+            margin-top: clamp(4px, 0.8vw, 8px);
+        }
+
+        #artist-reveal {
+            min-height: 100vh;
+            min-height: 100svh;
+            display: grid;
+            place-items: center;
+        }
+
+        .ar-reveal { display: none; width: 100%; }
+
+        .ar-reveal.show {
+            display: block;
+            animation: arIn 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+        }
+
+        @keyframes arIn {
+            from { opacity: 0; transform: translateY(26px) scale(0.97); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        .ar-grid {
+            display: grid;
+            gap: clamp(20px, 3.5vw, 56px);
+            align-items: center;
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 900px) {
+            .ar-grid {
+                grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+                text-align: left;
+            }
+        }
+
+        .ar-grid img {
+            display: block;
+            margin: 0 auto;
+            width: auto;
+            height: auto;
+            max-width: min(100%, 460px);
+            max-height: min(42vh, 380px);
+            filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55));
+        }
+
+        @media (min-width: 900px) {
+            .ar-grid img { max-height: min(74vh, 660px); }
+        }
+
+        .ar-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            line-height: 1.02;
+            font-size: clamp(32px, 5.2vw, 64px);
+            color: #f6dfae;
+            margin-top: 10px;
+            text-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .ar-role {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: clamp(10px, 1.2vw, 13px);
+            color: rgba(203, 163, 88, 0.9);
+            margin-top: 12px;
+        }
+
+        .ar-bio p + p { margin-top: 14px; }
+
+        .ar-bio .ar-text {
+            font-size: clamp(14px, 1.15vw, 17px);
+            line-height: 1.7;
+            color: rgba(255, 240, 220, 0.82);
+            max-width: 56ch;
+            margin-inline: auto;
+        }
+
+        @media (min-width: 900px) {
+            .ar-bio .ar-text { margin-inline: 0; }
+        }
+
+        .ar-bio em { font-style: italic; color: rgba(255, 240, 220, 0.95); }
+
+
+        @media (prefers-reduced-motion: reduce) {
+            .ar-reveal.show { animation: none; }
+        }
 
         #yt-player {
             position: absolute !important;
@@ -1065,6 +1221,50 @@
             </section>
         </div>
 
+        <!-- ARTIST REVEAL: counts down to 13 Aug 2026 IST, then swaps itself for the poster -->
+        <section id="artist-reveal"
+            class="relative z-10 text-center px-margin-mobile md:px-margin-desktop py-12 md:py-16 border-b border-primary/20 reveal-on-scroll">
+            <div id="ar-countdown">
+                <p class="ar-kicker">Artist Reveal</p>
+                <p class="ar-date">13 August 2026 &middot; 8:00 PM IST</p>
+                <div class="ar-row">
+                    <div class="ar-cell">
+                        <span class="ar-num" id="ar-days">00</span>
+                        <span class="cd-lbl">Days</span>
+                    </div>
+                    <div class="ar-cell">
+                        <span class="ar-num" id="ar-hours">00</span>
+                        <span class="cd-lbl">Hours</span>
+                    </div>
+                    <div class="ar-cell">
+                        <span class="ar-num" id="ar-minutes">00</span>
+                        <span class="cd-lbl">Mins</span>
+                    </div>
+                    <div class="ar-cell">
+                        <span class="ar-num" id="ar-seconds">00</span>
+                        <span class="cd-lbl">Secs</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ar-reveal" id="ar-image">
+                <div class="ar-grid">
+                    <img src="img/anarkali-2.webp" alt="Anarkali Marakkar" loading="lazy" decoding="async" />
+                    <div class="ar-bio">
+                        <p class="ar-kicker">Sargam '26 &middot; Guest</p>
+                        <h2 class="ar-name">Anarkali Marakkar</h2>
+                        <p class="ar-role">Actor &middot; Malayalam Cinema &middot; Kochi</p>
+                        <p class="ar-text">Born and raised in Kochi, Anarkali made her screen debut in 2016 as
+                            Darshana in <em>Aanandam</em>. The part reached her through cinematographer
+                            Anend C. Chandran, a friend of her sister's. She has worked in Malayalam cinema ever
+                            since, and is one of the most familiar faces of its new generation.</p>
+                        <p class="ar-text"><em>Uyare</em> (2019), where she played Sariya D'Costa, drew the widest
+                            critical acclaim of her career so far; her recent work runs from the anthology
+                            <em>B 32 Muthal 44 Vare</em> to <em>Mandakini</em> and <em>Gaganachari</em>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- LOWER SECTIONS -->
         <div id="content" class="px-margin-mobile md:px-margin-desktop py-16 relative">
 
@@ -1176,7 +1376,7 @@
                         Blending tradition with youthful energy, the event transforms the campus into a dynamic
                         celebration of culture and community. More than a festival, Sargam is a platform that fosters
                         connection, celebrates diversity, and creates lasting memories while preserving the essence of
-                        Kerala’s most cherished harvest festival. Sargam is more than a celebration—it is a convergence
+                        Kerala’s most cherished harvest festival. Sargam is more than a celebration: it is a convergence
                         of culture, community, and collaboration.
                     </p>
                 </div>
@@ -1358,8 +1558,10 @@
     </svg>
 
     <!-- Pulikali tiger peeking over the bottom edge -->
-    <img class="puli-peek" src="img/puli-peek.webp" alt="" aria-hidden="true" loading="lazy"
-        decoding="async" />
+    <a class="puli-peek" href="https://rambo.thanimavitc.site" target="_blank" rel="noopener noreferrer"
+        aria-label="Chat with RAMBO">
+        <img src="img/puli-peek.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+    </a>
 
     <footer class="w-full border-t border-primary/30 z-50 relative overflow-hidden"
         style="background-color: rgba(61, 17, 24, 0.92);">
@@ -1586,6 +1788,15 @@
             if (cdReduceMotion || !el.animate) { el.textContent = text; return; }
             const goo = el.closest('.cd-goo');
             if (goo) goo.classList.add('gooing');
+            // Each change advances the drum 30 degrees. The angle accumulates, so the
+            // drum ratchets round like a clock hand instead of springing back.
+            const cell = el.closest('.cd-art');
+            const drum = cell && cell.querySelector('img');
+            if (drum) {
+                const next = parseFloat(drum.dataset.rot || '0') + 30;
+                drum.dataset.rot = next;
+                drum.style.transform = 'rotate(' + next + 'deg)';
+            }
             const anim = el.animate([
                 { transform: 'scale(1, 1)', filter: 'blur(0px)' },
                 { transform: 'scale(0.52, 0.44)', filter: 'blur(4px)', offset: 0.5 },
@@ -1629,6 +1840,37 @@
         }
         setInterval(updateCountdown, 1000);
         updateCountdown();
+
+        // Artist reveal: same digit morph, its own target. At zero the countdown
+        // hides and the poster takes its place; the ticker stops there.
+        const AR_TARGET = new Date("2026-08-13T20:00:00+05:30").getTime();
+        // TESTING: flip to true to skip the countdown and show the guest straight away.
+        const AR_FORCE_REVEAL = false;
+
+        function updateArtistReveal() {
+            const diff = AR_FORCE_REVEAL ? 0 : AR_TARGET - Date.now();
+            const box = document.getElementById("ar-countdown");
+            if (diff <= 0) {
+                if (box) box.style.display = "none";
+                const img = document.getElementById("ar-image");
+                if (img) img.classList.add("show");
+                return true;
+            }
+            setDigits(document.getElementById("ar-days"),
+                Math.floor(diff / 86400000).toString().padStart(2, '0'));
+            setDigits(document.getElementById("ar-hours"),
+                Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0'));
+            setDigits(document.getElementById("ar-minutes"),
+                Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0'));
+            setDigits(document.getElementById("ar-seconds"),
+                Math.floor((diff % 60000) / 1000).toString().padStart(2, '0'));
+            return false;
+        }
+        if (!updateArtistReveal()) {
+            const arTimer = setInterval(() => {
+                if (updateArtistReveal()) clearInterval(arTimer);
+            }, 1000);
+        }
 
         // Scroll Observer
         const observerOptions = {
