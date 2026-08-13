@@ -981,6 +981,13 @@
             .ar-reveal.show { animation: none; }
         }
 
+        /* Header goes solid once the hero has scrolled by */
+        #navbar.nav-solid {
+            background: #3a0c16;
+            border-bottom: 1px solid rgba(203, 163, 88, 0.28);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
         #yt-player {
             position: absolute !important;
             width: 115% !important;
@@ -1917,6 +1924,8 @@
                     navbar.classList.remove('py-4');
                     navbar.classList.add('py-8');
                 }
+                // hero is min-h-screen, so its bottom sits one viewport down
+                navbar.classList.toggle('nav-solid', scrolled > window.innerHeight - navbar.offsetHeight);
             }
 
             const gutters = document.querySelectorAll('.gutter-line-art');
@@ -1925,6 +1934,7 @@
                 gutter.style.transform = `translateY(${scrolled * speed}px)`;
             });
         });
+        window.dispatchEvent(new Event('scroll'));
 
         document.querySelectorAll('.ripple-btn').forEach(button => {
             button.addEventListener('click', function (e) {
